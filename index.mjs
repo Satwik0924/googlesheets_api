@@ -4,19 +4,20 @@ import path from 'path';
 import fs from 'fs';
 import bodyParser from 'body-parser';
 import cors from 'cors'; // Import CORS middleware
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 // Get the current directory path using import.meta.url
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-// Load OAuth2 client credentials from the credentials.json file
-const credentialsPath = path.join(__dirname, 'credentials.json');
-const credentials = JSON.parse(fs.readFileSync(credentialsPath));
-
-// Extract client ID, client secret, and redirect URIs from credentials.json
-const { client_id, client_secret, redirect_uris } = credentials.web;
-
-// Initialize OAuth2 client using values from credentials.json
-const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+// Initialize OAuth2 client using values from environment variables
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
 
 // Load tokens from tokens.json if they exist
 const tokenPath = path.join(__dirname, 'tokens.json');
