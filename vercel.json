@@ -1,0 +1,7 @@
+{
+    "rewrites": [
+      { "source": "/auth", "destination": "/api/auth" },
+      { "source": "/append-data-to-existing-sheet", "destination": "/api/append-data-to-existing-sheet" }
+    ]
+  }
+  
